@@ -1,0 +1,159 @@
+:root {
+  --primary-color: #2563eb;
+  --bg-color: #f3f4f6;
+  --text-color: #1f2937;
+  --panel-bg: #ffffff;
+  --border-color: #e5e7eb;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app-header {
+  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+  color: white;
+  padding: 1.25rem 2.5rem;
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-header h1 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin-bottom: 0.25rem;
+  color: white;
+  letter-spacing: -0.025em;
+}
+
+.app-header p {
+  font-size: 0.95rem;
+  color: #bfdbfe;
+  font-weight: 500;
+}
+
+.btn-download {
+  background-color: white;
+  color: #1e3a8a;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 9999px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+}
+
+.btn-download:hover {
+  background-color: #f8fafc;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+}
+
+.btn-download:active {
+  transform: translateY(0);
+}
+
+.split-view {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  background-color: #f0f2f5; /* Unified smooth background */
+}
+
+.left-pane {
+  flex: 0 0 55vw; /* Much wider left pane width, taking 55% of the screen */
+  max-width: 800px;
+  overflow-y: auto;
+  background-color: var(--panel-bg);
+  padding: 2.5rem 3rem; /* Expanded padding horizontally */
+  border-right: 1px solid var(--border-color);
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.04);
+  z-index: 10;
+}
+
+.right-pane {
+  flex: 1;
+  overflow-y: auto;
+  background-color: #f8fafc; /* Replaced dark #52525b with an elegant light cool-white background */
+  padding: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Ensure resume starts at top instead of center */
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Print CSS for Download PDF */
+@media print {
+  /* Hide UI elements */
+  .left-pane, .app-header, .add-btn, .remove-btn, .stepper, .form-actions, .btn-download {
+    display: none !important;
+  }
+  
+  /* Reset backgrounds and borders for pure white paper */
+  body, .app-container, .split-view {
+    background-color: white !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  
+  .right-pane {
+    padding: 0 !important;
+    background-color: white !important;
+    display: block !important;
+    min-height: auto !important;
+    height: auto !important;
+  }
+
+  .resume-document {
+    box-shadow: none !important;
+    width: 100% !important; /* Full width of A4 */
+    max-width: 210mm !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important; /* System print dialog handles margins */
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Force page breaks if resume spans multiple pages */
+  .resume-section {
+    page-break-inside: avoid;
+  }
+}
+

@@ -1,0 +1,203 @@
+/* ATS-Optimized CSS. No fancy layouts, strict top-to-bottom standard flow. */
+
+.resume-document {
+  background-color: white;
+  width: 210mm; /* A4 Width */
+  min-height: 297mm; /* A4 Height */
+  padding: 20mm;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  font-family: 'Arial', 'Helvetica', sans-serif; /* Standard ATS Safe Fonts */
+  color: #000;
+  line-height: 1.5;
+  font-size: 11pt; /* Standard readable size */
+}
+
+.resume-link {
+  color: #1e3a8a; /* Professional dark blue link */
+  text-decoration: none;
+}
+
+.resume-link:hover {
+  text-decoration: underline;
+}
+
+.resume-header {
+  text-align: center;
+  margin-bottom: 12pt;
+  border-bottom: 2pt solid #000;
+  padding-bottom: 8pt;
+}
+
+.resume-name {
+  font-size: 24pt;
+  font-weight: bold;
+  margin: 0 0 4pt 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.resume-contact {
+  font-size: 10pt;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8pt;
+}
+
+.resume-contact span::after {
+  content: " | ";
+  margin-left: 8pt;
+}
+
+.resume-contact span:last-child::after {
+  content: "";
+}
+
+.resume-section {
+  margin-bottom: 12pt;
+}
+
+.section-title {
+  font-size: 14pt;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-bottom: 1pt solid #000;
+  margin-top: 0;
+  margin-bottom: 8pt;
+  padding-bottom: 2pt;
+}
+
+.resume-summary {
+  margin: 0;
+  text-align: justify;
+}
+
+.experience-item, .education-item {
+  margin-bottom: 10pt;
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.item-title {
+  font-weight: bold;
+  font-size: 12pt;
+}
+
+.item-date {
+  font-weight: normal;
+  font-size: 10pt;
+}
+
+.item-subheader {
+  font-style: italic;
+  font-weight: bold;
+  margin-bottom: 4pt;
+}
+
+.item-description {
+  margin: 0;
+  padding-left: 14pt; /* Standard bullet indentation */
+  list-style-type: disc; /* Safe list style for parsing */
+}
+
+.item-description li {
+  margin-bottom: 2pt;
+}
+
+.skills-list {
+  display: inline-block;
+}
+
+.skill-item {
+  font-weight: normal;
+}
+
+/* -------------------------------------- */
+/* TEMPLATE: MODERN                       */
+/* -------------------------------------- */
+.template-modern .resume-header {
+  text-align: left;
+  border-bottom: 4pt solid #1e3a8a; /* Bold dark blue separator */
+}
+
+.template-modern .resume-name {
+  color: #1e3a8a;
+  font-weight: 800;
+}
+
+.template-modern .resume-contact {
+  justify-content: flex-start;
+  color: #4b5563;
+}
+
+.template-modern .section-title {
+  border-bottom: none;
+  border-left: 5pt solid #1e3a8a; /* Modern left-bar styling */
+  padding-left: 8pt;
+  color: #1e3a8a;
+  font-weight: 800;
+}
+
+/* -------------------------------------- */
+/* TEMPLATE: COMPACT                      */
+/* -------------------------------------- */
+.template-compact .resume-section {
+  margin-bottom: 6pt;
+}
+
+.template-compact .resume-header {
+  margin-bottom: 6pt;
+  padding-bottom: 4pt;
+  border-bottom-width: 1pt;
+}
+
+.template-compact .resume-name {
+  font-size: 18pt;
+  margin-bottom: 2pt;
+}
+
+.template-compact .resume-contact {
+  font-size: 9pt;
+  gap: 6pt;
+}
+
+.template-compact .resume-contact span::after {
+  margin-left: 6pt;
+}
+
+.template-compact .section-title {
+  font-size: 11pt;
+  margin-bottom: 4pt;
+  padding-bottom: 1pt;
+}
+
+.template-compact .experience-item, 
+.template-compact .education-item {
+  margin-bottom: 4pt;
+}
+
+.template-compact .item-header {
+  font-size: 11pt;
+}
+
+.template-compact .item-subheader {
+  font-size: 10pt;
+  margin-bottom: 2pt;
+}
+
+.template-compact .item-description {
+  padding-left: 12pt;
+}
+
+.template-compact .item-description li {
+  font-size: 9.5pt;
+  margin-bottom: 1pt;
+}
+
+.template-compact .skills-list {
+  font-size: 10pt;
+}
