@@ -120,3 +120,14 @@
   text-decoration: underline;
   color: #1e3a8a;
 }
+
+@media (max-width: 768px) {
+  .auth-card {
+    padding: 2rem 1.5rem;
+    width: 90%;
+  }
+  
+  .auth-header h1 {
+    font-size: 2rem;
+  }
+}

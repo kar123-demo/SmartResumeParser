@@ -157,3 +157,35 @@ body {
   }
 }
 
+/* -------------------------------------- */
+/* RESPONSIVENESS (MOBILE STACKING)       */
+/* -------------------------------------- */
+@media (max-width: 900px) {
+  .app-header {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .split-view {
+    flex-direction: column;
+    height: auto;
+    overflow-y: visible;
+  }
+
+  .left-pane {
+    flex: none;
+    width: 100%;
+    max-width: 100%;
+    padding: 1.5rem 1rem;
+    border-right: none;
+    border-bottom: 2px solid var(--border-color);
+  }
+
+  .right-pane {
+    padding: 1.5rem 1rem;
+    height: auto;
+    min-height: 50vh;
+  }
+}

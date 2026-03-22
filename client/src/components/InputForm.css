@@ -281,3 +281,22 @@
   font-size: 0.85rem;
   color: #6b7280;
 }
+
+/* -------------------------------------- */
+/* MOBILE RESPONSIVENESS                  */
+/* -------------------------------------- */
+@media (max-width: 768px) {
+  .template-options {
+    grid-template-columns: 1fr;
+  }
+  
+  .date-group {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .stepper {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
