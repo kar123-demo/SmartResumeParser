@@ -18,7 +18,8 @@ function DashboardPage() {
     // Try to fetch to see if they have a resume
     const checkResume = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/resume', {
+        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+        const res = await fetch(`${API_URL}/api/resume`, {
           headers: { 'x-auth-token': token }
         }).catch(err => {
             console.log("Backend offline, falling back to local simulation.");

@@ -17,8 +17,10 @@ function AuthPage() {
     try {
       const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
       const bodyPayload = isLogin ? { email, password } : { name, email, password };
+      
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
-      const res = await fetch(`http://localhost:5000${endpoint}`, {
+      const res = await fetch(`${API_URL}${endpoint}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -63,8 +65,8 @@ function AuthPage() {
     <div className="auth-container">
       <div className="auth-card">
         <div className="auth-header">
-          <h1>SmartResume</h1>
-          <p style={{ marginTop: '0.75rem', lineHeight: '1.5', fontSize: '1.05rem', color: '#4b5563' }}>
+          <h1 style={{ fontSize: '1.875rem', color: '#1e3a8a', fontWeight: '800', marginBottom: '0.25rem' }}>SmartResume</h1>
+          <p style={{ marginTop: '0.5rem', lineHeight: '1.4', fontSize: '0.95rem', color: '#4b5563' }}>
             Welcome to the ultimate resume building platform. Craft high-impact, ATS-optimized resumes instantly and get noticed by top employers.
           </p>
         </div>
