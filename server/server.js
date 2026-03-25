@@ -26,35 +26,46 @@ const client = new MongoClient(uri, {
 });
 
 let db;
+let clientPromise;
 
-async function connectDB() {
-  try {
-    await client.connect();
-    db = client.db('smartresume'); // Connects to the smartresume database
-    console.log('Successfully connected to MongoDB Cloud via Native Driver.');
-  } catch (err) {
-    console.error('MongoDB connection error. Please ensure your MONGO_URI is correct.', err);
+async function getDB() {
+  if (db) return db; // Return cached connection
+  if (!clientPromise) {
+    // Start connection once
+    clientPromise = client.connect().catch(err => {
+      console.error('MongoDB connection error.', err);
+      clientPromise = null;
+      throw err;
+    });
   }
+  await clientPromise;
+  db = client.db('smartresume');
+  console.log('Successfully connected to MongoDB Cloud via Native Driver.');
+  return db;
 }
 
-// Inject the db instance into the request object for routes to use
-app.use((req, res, next) => {
-  if (!db) {
-    return res.status(503).json({ msg: 'Database connecting, please try again in a few seconds.' });
+// Inject the db instance into the request object for routes to use (pauses cold-starts safely)
+app.use(async (req, res, next) => {
+  try {
+    req.db = await getDB();
+    next();
+  } catch (error) {
+    return res.status(500).json({ msg: 'Database connection failed', error: error.message });
   }
-  req.db = db;
-  next();
 });
 
 // Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/resume', require('./routes/resume'));
 
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', message: 'Smart Resume API is running with Native MongoDB integration.' });
+app.get('/api/health', async (req, res) => {
+  try {
+    await getDB();
+    res.json({ status: 'ok', message: 'Smart Resume API is running with Native MongoDB integration.' });
+  } catch (err) {
+    res.status(500).json({ status: 'error', message: 'MongoDB disconnected' });
+  }
 });
-
-connectDB();
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
