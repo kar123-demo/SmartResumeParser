@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(cors());
 app.use(express.json());
-console.log("MONGO_URI:", process.env.MONGO_URI);
+
 
 // MongoDB Native Client Setup
 const uri = process.env.MONGO_URI;

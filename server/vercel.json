@@ -11,5 +11,8 @@
       "source": "/(.*)",
       "destination": "/server.js"
     }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/index.js" }
   ]
 }
