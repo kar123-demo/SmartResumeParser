@@ -15,7 +15,6 @@ function DashboardPage() {
       return;
     }
 
-    // Try to fetch to see if they have a resume
     const checkResume = async () => {
       try {
         const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
@@ -51,6 +50,10 @@ function DashboardPage() {
     navigate('/builder');
   };
 
+  const handleAnalyze = () => {
+    navigate('/analyzer');
+  };
+
   if (loading) return <div className="dashboard-container"><div className="dashboard-content">Loading...</div></div>;
 
   return (
@@ -64,7 +67,7 @@ function DashboardPage() {
 
       <main>
         <div className="dashboard-hero">
-          <h2>Welcome back, {userName}!</h2>
+          <h2>Welcome back, Champion!</h2>
           <p>Select a module below to optimize your career profile and get hired faster.</p>
         </div>
 
@@ -90,20 +93,7 @@ function DashboardPage() {
             </div>
           </div>
 
-          {/* Module 2: Check Resume */}
-          <div className="resume-card module-card">
-            <div className="resume-icon" style={{ backgroundColor: '#fef3c7', color: '#d97706' }}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-              </svg>
-            </div>
-            <h3 className="resume-title">Check Resume</h3>
-            <p className="module-desc">Verify if your resume has the exact keywords required to pass strict ATS filters.</p>
-            <div className="card-actions" style={{ marginTop: 'auto' }}>
-               <button className="btn-secondary" style={{ width: '100%', padding: '0.75rem', borderRadius: '0.5rem', cursor: 'not-allowed', opacity: 0.7 }} disabled>Coming Soon</button>
-            </div>
-          </div>
+        
 
           {/* Module 3: Analyse Resume */}
           <div className="resume-card module-card">
@@ -115,9 +105,9 @@ function DashboardPage() {
               </svg>
             </div>
             <h3 className="resume-title">Analyse Resume</h3>
-            <p className="module-desc">Get a deep AI-driven analysis of your resume’s impact, tone, and overall score.</p>
+            <p className="module-desc">Verify if your resume has the exact keywords required to pass strict ATS filters</p>
             <div className="card-actions" style={{ marginTop: 'auto' }}>
-               <button className="btn-secondary" style={{ width: '100%', padding: '0.75rem', borderRadius: '0.5rem', cursor: 'not-allowed', opacity: 0.7 }} disabled>Coming Soon</button>
+               <button className="btn-secondary module-launch-btn" onClick={handleAnalyze}>Run Analysis</button>
             </div>
           </div>
 

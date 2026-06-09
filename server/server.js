@@ -3,8 +3,14 @@ dns.setServers(['8.8.8.8', '8.8.4.4']); // Bypass local DNS issues for MongoDB S
 
 const express = require('express');
 const cors = require('cors');
+const multer = require('multer');
+const pdf = require('pdf-parse');
 const { MongoClient, ServerApiVersion } = require('mongodb');
 require('dotenv').config();
+const { normalizeText } = require('./logic/textProcessor');
+const { extractSkills } = require('./logic/skillExtractor');
+const { analyzeResume } = require('./logic/atsScorer');
+const { getJobRoles } = require('./data/jobRoles');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -12,6 +18,7 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(cors());
 app.use(express.json());
+const upload = multer({ storage: multer.memoryStorage() });
 
 
 // MongoDB Native Client Setup
@@ -44,19 +51,51 @@ async function getDB() {
   return db;
 }
 
-// Inject the db instance into the request object for routes to use (pauses cold-starts safely)
-app.use(async (req, res, next) => {
+async function requireDB(req, res, next) {
   try {
     req.db = await getDB();
     next();
   } catch (error) {
     return res.status(500).json({ msg: 'Database connection failed', error: error.message });
   }
+}
+
+app.post('/api/analyze', upload.single('resume'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    const pdfData = await pdf(req.file.buffer);
+    const normalizedResumeText = normalizeText(pdfData.text);
+    const skillsIndex = extractSkills(normalizedResumeText);
+    const results = analyzeResume(
+      skillsIndex,
+      normalizedResumeText,
+      getJobRoles(),
+      req.body.customJobDescription
+    );
+
+    return res.json({
+      success: true,
+      extractedData: {
+        skills: skillsIndex,
+      },
+      results,
+    });
+  } catch (error) {
+    console.error('Resume analysis failed', error);
+    return res.status(500).json({ error: 'Failed to process resume' });
+  }
+});
+
+app.get('/api/jobs', (_req, res) => {
+  res.json(getJobRoles());
 });
 
 // Routes
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/resume', require('./routes/resume'));
+app.use('/api/auth', requireDB, require('./routes/auth'));
+app.use('/api/resume', requireDB, require('./routes/resume'));
 
 app.get('/api/health', async (req, res) => {
   try {
